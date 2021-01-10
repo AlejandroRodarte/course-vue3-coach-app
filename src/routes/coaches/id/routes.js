@@ -1,7 +1,9 @@
+import ContactCoach from '../../../pages/requests/ContactCoach.vue';
+
 const routes = [
     {
         path: 'contact',
-        component: null
+        component: ContactCoach
     }
 ];
 
