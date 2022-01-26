@@ -18,7 +18,8 @@ const state = () => ({
         'I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.',
       hourlyRate: 30
     }
-  ]
+  ],
+  selectedCoachId: null,
 });
 
 export default state;
