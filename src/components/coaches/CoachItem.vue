@@ -11,16 +11,28 @@
         v-for="area in coach.areas"
         :key="area"
       >
-        {{ area }}
+        <base-badge
+          :type="area"
+          :title="area"
+        >
+          {{ area }}
+        </base-badge>
       </span>
     </div>
     <div class="actions">
-      <router-link :to="links.contact">
+      <base-button
+        :to="links.contact.value"
+        link
+        mode="outline"
+      >
         Contact
-      </router-link>
-      <router-link :to="links.details">
+      </base-button>
+      <base-button
+        :to="links.details.value"
+        link
+      >
         View Details
-      </router-link>
+      </base-button>
     </div>
   </li>
 </template>
