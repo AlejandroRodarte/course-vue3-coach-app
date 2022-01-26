@@ -12,12 +12,12 @@
       </router-link>
     </div>
     <ul v-if="hasCoaches">
-      <li
+      <coach-item
         v-for="coach in filteredCoaches"
         :key="coach.id"
+        :coach="coach"
       >
-        {{ coach.firstName }}
-      </li>
+      </coach-item>
     </ul>
     <h3 v-else>
       No coaches found
@@ -29,8 +29,12 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
+import CoachItem from '../../components/coaches/CoachItem.vue';
 
 export default {
+  components: {
+    CoachItem
+  },
   setup() {
     const store = useStore();
     const filteredCoaches = computed(
