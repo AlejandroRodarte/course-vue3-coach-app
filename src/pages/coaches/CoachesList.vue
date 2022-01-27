@@ -1,6 +1,6 @@
 <template>
   <section>
-    Filter
+    <coach-filter v-model:filters="coachFilters"></coach-filter>
   </section>
   <section>
     <base-card>
@@ -31,20 +31,30 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
 import CoachItem from '../../components/coaches/CoachItem.vue';
+import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 export default {
   components: {
-    CoachItem
+    CoachItem,
+    CoachFilter
   },
   setup() {
+    const coachFilters = ref({
+      areas: ['frontend', 'backend', 'career']
+    });
     const store = useStore();
     const filteredCoaches = computed(
       function() {
-        return store.getters[coachesTypes.GET_COACHES];
+        return store.getters[coachesTypes.GET_COACHES].filter((coach) => {
+          for (const area of coachFilters.value.areas) {
+            if (coach.areas.includes(area)) return true;
+          }
+          return false;
+        });
       }
     );
     const hasCoaches = computed(
@@ -52,10 +62,10 @@ export default {
         return store.getters[coachesTypes.HAS_COACHES];
       }
     );
-
     return {
       filteredCoaches,
-      hasCoaches
+      hasCoaches,
+      coachFilters
     };
   }
 }
