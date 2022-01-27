@@ -9,6 +9,7 @@
           Refresh
         </base-button>
         <base-button
+          v-if="!isUserOnCoachList"
           link
           to="/register"
         >
@@ -57,6 +58,11 @@ export default {
         });
       }
     );
+    const isUserOnCoachList = computed(
+      function() {
+        return store.getters[coachesTypes.IS_USER_ON_COACH_LIST];
+      }
+    );
     const hasCoaches = computed(
       function() {
         return store.getters[coachesTypes.HAS_COACHES];
@@ -65,7 +71,8 @@ export default {
     return {
       filteredCoaches,
       hasCoaches,
-      coachFilters
+      coachFilters,
+      isUserOnCoachList
     };
   }
 }

@@ -75,7 +75,8 @@
 import { ref } from 'vue';
 
 export default {
-  setup() {
+  emits: ['on-submit-form'],
+  setup(_, ctx) {
     const areas = ref([
       {
         value: 'frontend',
@@ -100,7 +101,7 @@ export default {
       areas: []
     });
     function onSubmit() {
-      console.log(form.value);
+      ctx.emit('on-submit-form', form.value);
     }
     return {
       areas,
