@@ -47,6 +47,7 @@ export default {
   setup() {
     const coachFilters = ref(coachesListFilters);
     const store = useStore();
+    store.dispatch(coachesTypes.SET_COACHES);
     const filteredCoaches = computed(
       function() {
         return store.getters[coachesTypes.GET_COACHES].filter((coach) => {

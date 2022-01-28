@@ -1,7 +1,9 @@
 import addCoach from './add-coach';
+import getCoaches from './get-coaches';
 
 const api = {
-  addCoach
+  addCoach,
+  getCoaches
 };
 
 export default api;

@@ -18,6 +18,15 @@ const actions = {
     if (error) return;
     const mutateAddCoachPayload = { newCoach: { ...formattedForm, id: userId } };
     ctx.commit(types.MUTATE_ADD_COACH, mutateAddCoachPayload);
+  },
+  [types.SET_COACHES]: async (ctx) => {
+    const [response, error] = await api.getCoaches();
+    if (error) return;
+    const coaches = Object.keys(response).map((key) => ({
+      id: key,
+      ...response[key]
+    }));
+    ctx.commit(types.MUTATE_SET_COACHES, { coaches });
   }
 };
 

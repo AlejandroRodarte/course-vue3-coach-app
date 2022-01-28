@@ -6,5 +6,7 @@ export const IS_USER_ON_COACH_LIST = `${MODULE_NAME}/getters/isUserOnCoachList`;
 export const GET_SELECTED_COACH = `${MODULE_NAME}/getters/getSelectedCoach`;
 export const MUTATE_SELECT_COACH_ID = `${MODULE_NAME}/mutations/mutateSetSelectedCoachId`;
 export const MUTATE_ADD_COACH = `${MODULE_NAME}/mutations/mutateAddCoach`;
+export const MUTATE_SET_COACHES = `${MODULE_NAME}/mutations/mutateSetCoaches`;
 export const SELECT_COACH_ID = `${MODULE_NAME}/actions/selectCoachId`;
 export const ADD_COACH = `${MODULE_NAME}/actions/addCoach`;
+export const SET_COACHES = `${MODULE_NAME}/actions/setCoaches`;
