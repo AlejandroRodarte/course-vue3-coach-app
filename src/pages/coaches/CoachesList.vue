@@ -5,18 +5,24 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline">
+        <base-button
+          mode="outline"
+          @click="onRefresh"
+        >
           Refresh
         </base-button>
         <base-button
-          v-if="!isUserOnCoachList"
+          v-if="!isUserOnCoachList && !loading"
           link
           to="/register"
         >
           Register as a coach
         </base-button>
       </div>
-      <ul v-if="hasCoaches">
+      <div v-if="loading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasCoaches">
         <coach-item
           v-for="coach in filteredCoaches"
           :key="coach.id"
@@ -27,12 +33,15 @@
       <h3 v-else>
         No coaches found
       </h3>
+      <p v-if="error">
+        {{ error }}
+      </p>
     </base-card>
   </section>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
 import coachesListFilters from '../../util/constants/coaches/coaches-list-filters';
@@ -47,7 +56,6 @@ export default {
   setup() {
     const coachFilters = ref(coachesListFilters);
     const store = useStore();
-    store.dispatch(coachesTypes.SET_COACHES);
     const filteredCoaches = computed(
       function() {
         return store.getters[coachesTypes.GET_COACHES].filter((coach) => {
@@ -68,11 +76,31 @@ export default {
         return store.getters[coachesTypes.HAS_COACHES];
       }
     );
+    const loading = computed(
+      function() {
+        return store.getters[coachesTypes.GET_LOADING_FLAG];
+      }
+    );
+    const error = computed(
+      function() {
+        return store.getters[coachesTypes.GET_ERROR];
+      }
+    );
+    function onRefresh() {
+      store.dispatch(coachesTypes.SET_COACHES);
+    }
+    if (!hasCoaches.value) store.dispatch(coachesTypes.SET_COACHES);
+    onUnmounted(() => {
+      store.dispatch(coachesTypes.CLEAR_ERROR);
+    });
     return {
       filteredCoaches,
       hasCoaches,
       coachFilters,
-      isUserOnCoachList
+      isUserOnCoachList,
+      loading,
+      error,
+      onRefresh
     };
   }
 }
