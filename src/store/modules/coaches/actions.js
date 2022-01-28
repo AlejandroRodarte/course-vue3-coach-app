@@ -35,6 +35,7 @@ const actions = {
       ...response[key]
     }));
     ctx.commit(types.MUTATE_SET_COACHES, { coaches });
+    ctx.commit(types.MUTATE_SET_FETCH_TIMESTAMP);
   },
   [types.CLEAR_ERROR]: (ctx) => ctx.commit(types.MUTATE_CLEAR_ERROR)
 };

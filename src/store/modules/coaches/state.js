@@ -2,7 +2,8 @@ const state = () => ({
   coaches: [],
   selectedCoachId: null,
   loading: false,
-  error: null
+  error: null,
+  lastFetchTimestamp: null
 });
 
 export default state;

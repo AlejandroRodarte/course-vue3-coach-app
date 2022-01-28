@@ -1,7 +1,8 @@
 const state = () => ({
   requests: [],
   loading: false,
-  error: null
+  error: null,
+  lastFetchTimestamp: null
 });
 
 export default state;

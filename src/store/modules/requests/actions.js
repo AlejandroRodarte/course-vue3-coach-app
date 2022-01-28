@@ -16,6 +16,7 @@ const actions = {
       ...response[key]
     }));
     ctx.commit(types.MUTATE_SET_REQUESTS, { requests });
+    ctx.commit(types.MUTATE_SET_FETCH_TIMESTAMP);
   },
   [types.ADD_REQUEST]: async (ctx, payload) => {
     const { form } = payload;

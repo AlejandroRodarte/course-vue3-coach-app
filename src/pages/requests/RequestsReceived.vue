@@ -64,13 +64,18 @@ export default {
         return store.getters[requestsTypes.GET_ERROR];
       }
     );
+    const shouldUpdate = computed(
+      function() {
+        return store.getters[requestsTypes.SHOULD_UPDATE];
+      }
+    );
     function onBaseDialogClose() {
       store.dispatch(requestsTypes.CLEAR_ERROR);
     }
     onUnmounted(() => {
       store.dispatch(requestsTypes.CLEAR_ERROR);
     });
-    if (!hasRequests.value) store.dispatch(requestsTypes.SET_REQUESTS);
+    if (!hasRequests.value || shouldUpdate.value) store.dispatch(requestsTypes.SET_REQUESTS);
     return {
       receivedRequests,
       hasRequests,

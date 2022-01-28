@@ -20,7 +20,8 @@ const mutations = {
     state.error = payload.error,
     state.loading = false
   },
-  [types.MUTATE_CLEAR_ERROR]: (state) => state.error = null
+  [types.MUTATE_CLEAR_ERROR]: (state) => state.error = null,
+  [types.MUTATE_SET_FETCH_TIMESTAMP]: (state) => state.lastFetchTimestamp = new Date().getTime()
 };
 
 export default mutations;

@@ -91,13 +91,18 @@ export default {
         return store.getters[coachesTypes.GET_ERROR];
       }
     );
+    const shouldUpdate = computed(
+      function() {
+        return store.getters[coachesTypes.SHOULD_UPDATE];
+      }
+    );
     function onRefresh() {
       store.dispatch(coachesTypes.SET_COACHES);
     }
     function onBaseDialogClose() {
       store.dispatch(coachesTypes.CLEAR_ERROR);
     }
-    if (!hasCoaches.value) store.dispatch(coachesTypes.SET_COACHES);
+    if (!hasCoaches.value || shouldUpdate.value) store.dispatch(coachesTypes.SET_COACHES);
     onUnmounted(() => {
       store.dispatch(coachesTypes.CLEAR_ERROR);
     });

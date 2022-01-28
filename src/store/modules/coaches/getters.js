@@ -12,6 +12,7 @@ const getters = {
   },
   [types.GET_LOADING_FLAG]: (state) => state.loading,
   [types.GET_ERROR]: (state) => state.error,
+  [types.SHOULD_UPDATE]: (state) => !state.lastFetchTimestamp || (new Date().getTime() - state.lastFetchTimestamp) > 60000
 };
 
 export default getters;
