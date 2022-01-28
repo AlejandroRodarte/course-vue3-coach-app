@@ -1,3 +1,5 @@
-const state = () => {};
+const state = () => ({
+  requests: []
+});
 
 export default state;
