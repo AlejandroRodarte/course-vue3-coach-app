@@ -24,6 +24,7 @@
 
 <script>
 import { ref, watch } from 'vue';
+import coachFilterOptions from '../../util/constants/coaches/coach-filter-options';
 
 export default {
   props: {
@@ -33,22 +34,7 @@ export default {
     }
   },
   setup(props, ctx) {
-    const options = ref({
-      areas: [
-        {
-          value: 'frontend',
-          label: 'Frontend'
-        },
-        {
-          value: 'backend',
-          label: 'Backend'
-        },
-        {
-          value: 'career',
-          label: 'Career'
-        }
-      ]
-    });
+    const options = ref(coachFilterOptions);
     const newFilters = ref({
       ...props.filters,
       areas: [...props.filters.areas]

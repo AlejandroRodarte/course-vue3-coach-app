@@ -35,6 +35,7 @@
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
+import coachesListFilters from '../../util/constants/coaches/coaches-list-filters';
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
@@ -44,9 +45,7 @@ export default {
     CoachFilter
   },
   setup() {
-    const coachFilters = ref({
-      areas: ['frontend', 'backend', 'career']
-    });
+    const coachFilters = ref(coachesListFilters);
     const store = useStore();
     const filteredCoaches = computed(
       function() {

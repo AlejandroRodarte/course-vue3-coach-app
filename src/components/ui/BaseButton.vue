@@ -2,6 +2,7 @@
   <button
     v-if="!link"
     :class="mode"
+    :disabled="disabled"
   >
     <slot></slot>
   </button>
@@ -32,6 +33,11 @@ export default {
       required: false,
       default: null,
       validator: (value) => ['flat', 'outline'].includes(value)
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   }
 }
@@ -77,5 +83,11 @@ button:active {
 .outline:hover,
 .outline:active {
   background-color: #edd2ff;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cccccc;
+  color: #666666;
 }
 </style>

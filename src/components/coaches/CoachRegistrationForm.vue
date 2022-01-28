@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <div class="form-control">
+    <div 
+      class="form-control"
+      :class="{ invalid: metadata.inputs.names.inputs.first.touched && !metadata.inputs.names.inputs.first.isValid }"
+    >
       <label for="first-name">
         First Name
       </label>
@@ -9,9 +12,16 @@
         name="first-name"
         id="first-name"
         v-model.trim="form.names.first"
+        @input="onInputChange(['names', 'first'])"
       >
+      <p v-if="metadata.inputs.names.inputs.first.touched && !metadata.inputs.names.inputs.first.isValid">
+        {{ metadata.inputs.names.inputs.first.message }}
+      </p>
     </div>
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: metadata.inputs.names.inputs.last.touched && !metadata.inputs.names.inputs.last.isValid }"  
+    >
       <label for="last-name">
         Last Name
       </label>
@@ -20,9 +30,16 @@
         name="last-name"
         id="last-name"
         v-model.trim="form.names.last"
+        @input="onInputChange(['names', 'last'])"
       >
+      <p v-if="metadata.inputs.names.inputs.last.touched && !metadata.inputs.names.inputs.last.isValid">
+        {{ metadata.inputs.names.inputs.last.message }}
+      </p>
     </div>
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: metadata.inputs.description.touched && !metadata.inputs.description.isValid }"  
+    >
       <label for="description">
         Description
       </label>
@@ -31,10 +48,17 @@
         id="description"
         rows="5"
         v-model.trim="form.description"
+        @input="onInputChange(['description'])"
       >
       </textarea>
+      <p v-if="metadata.inputs.description.touched && !metadata.inputs.description.isValid">
+        {{ metadata.inputs.description.message }}
+      </p>
     </div>
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: metadata.inputs.rate.touched && !metadata.inputs.rate.isValid }" 
+    >
       <label for="rate">
         Hourly Rate
       </label>
@@ -43,9 +67,16 @@
         name="rate"
         id="rate"
         v-model.number="form.rate"
+        @input="onInputChange(['rate'])"
       >
+      <p v-if="metadata.inputs.rate.touched && !metadata.inputs.rate.isValid">
+        {{ metadata.inputs.rate.message }}
+      </p>
     </div>
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: metadata.inputs.areas.touched && !metadata.inputs.areas.isValid }" 
+    >
       <h3>
         Areas of expertise
       </h3>
@@ -58,14 +89,24 @@
           :name="area.value"
           :id="area.value"
           :value="area.value"
-          v-model="form.areas"
+          v-model.lazy="form.areas"
+          @change="onInputChange(['areas'])"
         >
         <label :for="area.value">
           {{ area.label }}
         </label>
       </div>
+      <p v-if="metadata.inputs.areas.touched && !metadata.inputs.areas.isValid">
+        {{ metadata.inputs.areas.message }}
+      </p>
     </div>
-    <base-button type="submit">
+    <p v-if="!metadata.form.isValid">
+      Please fix the above errors and submit again.
+    </p>
+    <base-button
+      type="submit"
+      :disabled="!metadata.form.isValid"
+    >
       Register
     </base-button>
   </form>
@@ -73,24 +114,16 @@
 
 <script>
 import { ref } from 'vue';
+import coachRegistrationFormAreas from '../../util/constants/coaches/coach-registration-form-areas';
+import coachRegistrationFormSpec from '../../util/constants/coaches/coach-registration-form-spec';
+import generateFormMetadata from '../../util/forms/validation/generate-form-metadata';
+import updateInputMetadata from '../../util/forms/validation/update-input-metadata';
+import updateFormMetadata from '../../util/forms/validation/update-form-metadata';
 
 export default {
   emits: ['on-submit-form'],
   setup(_, ctx) {
-    const areas = ref([
-      {
-        value: 'frontend',
-        label: 'Frontend Development'
-      },
-      {
-        value: 'backend',
-        label: 'Backend Development'
-      },
-      {
-        value: 'career',
-        label: 'Career Advisory'
-      }
-    ]);
+    const areas = ref(coachRegistrationFormAreas);
     const form = ref({
       names: {
         first: '',
@@ -100,13 +133,20 @@ export default {
       rate: 0,
       areas: []
     });
+    const metadata = ref(generateFormMetadata(coachRegistrationFormSpec));
+    function onInputChange(path) {
+      updateInputMetadata(path, form.value, coachRegistrationFormSpec, metadata.value);
+      updateFormMetadata(coachRegistrationFormSpec, metadata.value);
+    }
     function onSubmit() {
       ctx.emit('on-submit-form', form.value);
     }
     return {
       areas,
       form,
-      onSubmit
+      metadata,
+      onSubmit,
+      onInputChange
     };
   }
 }
