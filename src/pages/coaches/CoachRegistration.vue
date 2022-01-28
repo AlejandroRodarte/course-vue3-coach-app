@@ -1,13 +1,18 @@
 <template>
+  <base-dialog
+    :show="!!error"
+    @close="onBaseDialogClose"
+  >
+    <p>
+      {{ error }}
+    </p>
+  </base-dialog>
   <section>
     <base-card>
       <h2>
         Register as a coach now!
       </h2>
       <coach-registration-form @on-submit-form="onSubmitForm"></coach-registration-form>
-      <p v-if="error">
-        {{ error }}
-      </p>
     </base-card>
   </section>
 </template>
@@ -40,8 +45,12 @@ export default {
       await store.dispatch(coachesTypes.ADD_COACH, { form });
       if (!error.value) router.replace('/coaches');
     }
+    function onBaseDialogClose() {
+      store.dispatch(coachesTypes.CLEAR_ERROR);
+    }
     return {
       onSubmitForm,
+      onBaseDialogClose,
       loading,
       error
     };

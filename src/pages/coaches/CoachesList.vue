@@ -1,4 +1,12 @@
 <template>
+  <base-dialog
+    :show="!!error"
+    @close="onBaseDialogClose"
+  >
+    <p>
+      {{ error }}
+    </p>
+  </base-dialog>
   <section>
     <coach-filter v-model:filters="coachFilters"></coach-filter>
   </section>
@@ -33,9 +41,6 @@
       <h3 v-else>
         No coaches found
       </h3>
-      <p v-if="error">
-        {{ error }}
-      </p>
     </base-card>
   </section>
 </template>
@@ -89,6 +94,9 @@ export default {
     function onRefresh() {
       store.dispatch(coachesTypes.SET_COACHES);
     }
+    function onBaseDialogClose() {
+      store.dispatch(coachesTypes.CLEAR_ERROR);
+    }
     if (!hasCoaches.value) store.dispatch(coachesTypes.SET_COACHES);
     onUnmounted(() => {
       store.dispatch(coachesTypes.CLEAR_ERROR);
@@ -100,7 +108,8 @@ export default {
       isUserOnCoachList,
       loading,
       error,
-      onRefresh
+      onRefresh,
+      onBaseDialogClose
     };
   }
 }
