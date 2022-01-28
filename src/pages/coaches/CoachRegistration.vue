@@ -22,8 +22,8 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    function onSubmitForm(form) {
-      store.dispatch(coachesTypes.ADD_COACH, { form });
+    async function onSubmitForm(form) {
+      await store.dispatch(coachesTypes.ADD_COACH, { form });
       router.replace('/coaches');
     }
     return { onSubmitForm };
