@@ -1,48 +1,50 @@
 <template>
-  <base-dialog
-    :show="!!error"
-    @close="onBaseDialogClose"
-  >
-    <p>
-      {{ error }}
-    </p>
-  </base-dialog>
-  <section>
-    <coach-filter v-model:filters="coachFilters"></coach-filter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button
-          mode="outline"
-          @click="onRefresh"
-        >
-          Refresh
-        </base-button>
-        <base-button
-          v-if="!isUserOnCoachList && !loading"
-          link
-          to="/register"
-        >
-          Register as a coach
-        </base-button>
-      </div>
-      <div v-if="loading">
-        <base-spinner></base-spinner>
-      </div>
-      <ul v-else-if="hasCoaches">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :coach="coach"
-        >
-        </coach-item>
-      </ul>
-      <h3 v-else>
-        No coaches found
-      </h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog
+      :show="!!error"
+      @close="onBaseDialogClose"
+    >
+      <p>
+        {{ error }}
+      </p>
+    </base-dialog>
+    <section>
+      <coach-filter v-model:filters="coachFilters"></coach-filter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button
+            mode="outline"
+            @click="onRefresh"
+          >
+            Refresh
+          </base-button>
+          <base-button
+            v-if="!isUserOnCoachList && !loading"
+            link
+            to="/register"
+          >
+            Register as a coach
+          </base-button>
+        </div>
+        <div v-if="loading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-else-if="hasCoaches">
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :coach="coach"
+          >
+          </coach-item>
+        </ul>
+        <h3 v-else>
+          No coaches found
+        </h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>

@@ -1,13 +1,15 @@
 <template>
-  <base-dialog
-    :show="!!error"
-    @close="onBaseDialogClose"
-  >
-    <p>
-      {{ error }}
-    </p>
-  </base-dialog>
-  <contact-coach-form @on-submit-form="onSubmitForm"></contact-coach-form>
+  <div>
+    <base-dialog
+      :show="!!error"
+      @close="onBaseDialogClose"
+    >
+      <p>
+        {{ error }}
+      </p>
+    </base-dialog>
+    <contact-coach-form @on-submit-form="onSubmitForm"></contact-coach-form>
+  </div>
 </template>
 
 <script>

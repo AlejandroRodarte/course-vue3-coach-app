@@ -1,20 +1,22 @@
 <template>
-  <base-dialog
-    :show="!!error"
-    @close="onBaseDialogClose"
-  >
-    <p>
-      {{ error }}
-    </p>
-  </base-dialog>
-  <section>
-    <base-card>
-      <h2>
-        Register as a coach now!
-      </h2>
-      <coach-registration-form @on-submit-form="onSubmitForm"></coach-registration-form>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog
+      :show="!!error"
+      @close="onBaseDialogClose"
+    >
+      <p>
+        {{ error }}
+      </p>
+    </base-dialog>
+    <section>
+      <base-card>
+        <h2>
+          Register as a coach now!
+        </h2>
+        <coach-registration-form @on-submit-form="onSubmitForm"></coach-registration-form>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
