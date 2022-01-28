@@ -1,5 +1,7 @@
 const state = () => ({
-  requests: []
+  requests: [],
+  loading: false,
+  error: null
 });
 
 export default state;

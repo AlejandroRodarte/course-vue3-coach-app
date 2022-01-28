@@ -8,8 +8,10 @@ const getters = {
   },
   [types.HAS_REQUESTS]: (state, getters) => {
     const requests = getters[types.GET_REQUESTS];
-    return requests && requests.length > 0;
-  }
+    return requests && !state.loading && requests.length > 0;
+  },
+  [types.GET_LOADING_FLAG]: (state) => state.loading,
+  [types.GET_ERROR]: (state) => state.error
 };
 
 export default getters;

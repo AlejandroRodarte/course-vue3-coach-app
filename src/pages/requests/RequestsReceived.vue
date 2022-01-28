@@ -1,4 +1,12 @@
 <template>
+  <base-dialog
+    :show="!!error"
+    @close="onBaseDialogClose"
+  >
+    <p>
+      {{ error }}
+    </p>
+  </base-dialog>
   <section>
     <base-card>
       <header>
@@ -6,7 +14,10 @@
           Requests Received
         </h2>
       </header>
-      <ul v-if="hasRequests">
+      <div v-if="loading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasRequests">
         <request-item
           v-for="request in receivedRequests"
           :key="request.id"
@@ -22,7 +33,7 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import * as requestsTypes from '../../store/modules/requests/types';
 import RequestItem from '../../components/requests/RequestItem.vue';
@@ -43,9 +54,29 @@ export default {
         return store.getters[requestsTypes.HAS_REQUESTS];
       }
     );
+    const loading = computed(
+      function() {
+        return store.getters[requestsTypes.GET_LOADING_FLAG];
+      }
+    );
+    const error = computed(
+      function() {
+        return store.getters[requestsTypes.GET_ERROR];
+      }
+    );
+    function onBaseDialogClose() {
+      store.dispatch(requestsTypes.CLEAR_ERROR);
+    }
+    onUnmounted(() => {
+      store.dispatch(requestsTypes.CLEAR_ERROR);
+    });
+    if (!hasRequests.value) store.dispatch(requestsTypes.SET_REQUESTS);
     return {
       receivedRequests,
-      hasRequests
+      hasRequests,
+      loading,
+      error,
+      onBaseDialogClose
     };
   }
 }

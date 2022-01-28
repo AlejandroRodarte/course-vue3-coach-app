@@ -1,8 +1,17 @@
 <template>
+  <base-dialog
+    :show="!!error"
+    @close="onBaseDialogClose"
+  >
+    <p>
+      {{ error }}
+    </p>
+  </base-dialog>
   <contact-coach-form @on-submit-form="onSubmitForm"></contact-coach-form>
 </template>
 
 <script>
+import { computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import * as requestsTypes from '../../store/modules/requests/types';
@@ -16,17 +25,38 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    function onSubmitForm(form) {
+    const loading = computed(
+      function() {
+        return store.getters[requestsTypes.GET_LOADING_FLAG];
+      }
+    );
+    const error = computed(
+      function() {
+        return store.getters[requestsTypes.GET_ERROR];
+      }
+    );
+    async function onSubmitForm(form) {
       const addRequestPayload = {
         form: {
           ...form,
           coachId: route.params.id
         }
       };
-      store.dispatch(requestsTypes.ADD_REQUEST, addRequestPayload);
-      router.replace('/coaches');
+      await store.dispatch(requestsTypes.ADD_REQUEST, addRequestPayload);
+      if (!error.value) router.replace('/coaches');
     }
-    return { onSubmitForm };
+    function onBaseDialogClose() {
+      store.dispatch(requestsTypes.CLEAR_ERROR);
+    }
+    onUnmounted(() => {
+      store.dispatch(requestsTypes.CLEAR_ERROR);
+    });
+    return {
+      onSubmitForm,
+      onBaseDialogClose,
+      loading,
+      error
+    };
   }
 }
 </script>
