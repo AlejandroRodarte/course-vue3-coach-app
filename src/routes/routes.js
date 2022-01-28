@@ -1,4 +1,5 @@
 import coachesRoutes from './coaches/routes';
+import UserAuth from '../pages/auth/UserAuth.vue';
 import Coaches from '../pages/coaches/Coaches.vue';
 import CoachRegistration from '../pages/coaches/CoachRegistration.vue';
 import RequestsReceived from '../pages/requests/RequestsReceived.vue';
@@ -8,6 +9,10 @@ const routes = [
   {
     path: '/',
     redirect: '/coaches'
+  },
+  {
+    path: '/auth',
+    component: UserAuth
   },
   {
     path: '/coaches',

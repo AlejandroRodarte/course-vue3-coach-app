@@ -4,6 +4,7 @@ import isNumber from './is-number';
 import isString from './is-string';
 import minArrayLength from './min-array-length';
 import minNumber from './min-number';
+import minStringLength from './min-string-length';
 import stringRequired from './string-required';
 
 // map strategy types ('is-array', 'min-number')
@@ -15,6 +16,7 @@ const strategies = {
   'is-string': isString,
   'min-array-length': minArrayLength,
   'min-number': minNumber,
+  'min-string-length': minStringLength,
   'string-required': stringRequired
 };
 
