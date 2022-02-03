@@ -23,7 +23,8 @@ const actions = {
   [types.SIGNUP]: async (ctx, payload) => {
     await ctx.dispatch(types.AUTHENTICATE, { method: 'signUp', credentials: payload });
   },
-  [types.CLEAR_ERROR]: (ctx) => ctx.commit(types.MUTATE_CLEAR_ERROR)
+  [types.CLEAR_ERROR]: (ctx) => ctx.commit(types.MUTATE_CLEAR_ERROR),
+  [types.LOGOUT]: (ctx) => ctx.commit(types.MUTATE_CLEAR_CREDENTIALS)
 };
 
 export default actions;

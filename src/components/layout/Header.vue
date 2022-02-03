@@ -22,6 +22,11 @@
             Login
           </router-link>
         </li>
+        <li v-if="isAuthenticated">
+          <base-button @click="onLogout">
+            Logout
+          </base-button>
+        </li>
       </ul>
     </nav>
   </header>
@@ -40,8 +45,13 @@ export default {
         return store.getters[authTypes.IS_AUTHENTICATED];
       }
     );
-
-    return { isAuthenticated };
+    function onLogout() {
+      store.dispatch(authTypes.LOGOUT);
+    }
+    return {
+      isAuthenticated,
+      onLogout
+    };
   }
 }
 </script>

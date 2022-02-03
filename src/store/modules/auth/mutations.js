@@ -17,6 +17,13 @@ const mutations = {
     state.loading = false
   },
   [types.MUTATE_CLEAR_ERROR]: (state) => state.error = null,
+  [types.MUTATE_CLEAR_CREDENTIALS]: (state) => {
+    state.error = null;
+    state.loading = false;
+    state.userId = null;
+    state.token = null;
+    state.expirationDate = null;
+  }
 };
 
 export default mutations;
