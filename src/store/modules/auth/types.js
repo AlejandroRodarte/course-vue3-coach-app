@@ -3,6 +3,7 @@ const MODULE_NAME = 'auth';
 export const GET_USER_ID = `${MODULE_NAME}/getters/getUserId`;
 export const GET_LOADING_FLAG = `${MODULE_NAME}/getters/getLoadingFlag`;
 export const GET_ERROR = `${MODULE_NAME}/getters/getError`;
+export const GET_TOKEN = `${MODULE_NAME}/getters/getToken`;
 export const MUTATE_SET_LOADING_FLAG = `${MODULE_NAME}/mutations/mutateSetLoadingFlag`;
 export const MUTATE_SET_ERROR = `${MODULE_NAME}/mutations/mutateSetError`;
 export const MUTATE_CLEAR_ERROR = `${MODULE_NAME}/mutations/mutateClearError`;

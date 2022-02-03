@@ -5,8 +5,9 @@ import api from '../../../api';
 const actions = {
   [types.SET_REQUESTS]: async (ctx) => {
     const userId = ctx.rootGetters[authTypes.GET_USER_ID];
+    const token = ctx.rootGetters[authTypes.GET_TOKEN];
     ctx.commit(types.MUTATE_SET_LOADING_FLAG);
-    const [response, error] = await api.getRequests({ id: userId });
+    const [response, error] = await api.getRequests({ id: userId, token });
     if (error) {
       ctx.commit(types.MUTATE_SET_ERROR, { error: error.message });
       return;

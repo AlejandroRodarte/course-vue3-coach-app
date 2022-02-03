@@ -7,6 +7,7 @@ const actions = {
   [types.ADD_COACH]: async (ctx, payload) => {
     const { form } = payload;
     const userId = ctx.rootGetters[authTypes.GET_USER_ID];
+    const token = ctx.rootGetters[authTypes.GET_TOKEN];
     const formattedForm = {
       firstName: form.names.first,
       lastName: form.names.last,
@@ -15,7 +16,7 @@ const actions = {
       areas: form.areas
     };
     ctx.commit(types.MUTATE_SET_LOADING_FLAG);
-    const [, error] = await api.addCoach({ id: userId, coach: formattedForm });
+    const [, error] = await api.addCoach({ id: userId, token, coach: formattedForm });
     if (error) {
       ctx.commit(types.MUTATE_SET_ERROR, { error: error.message });
       return;
