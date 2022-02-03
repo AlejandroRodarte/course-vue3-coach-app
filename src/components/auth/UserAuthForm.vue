@@ -79,7 +79,7 @@ export default {
       updateFormMetadata(userAuthFormSpec, metadata.value);
     }
     function onSubmit() {
-      ctx.emit('on-submit-form', form.value);
+      ctx.emit('on-submit-form', { form: form.value, mode: currentMode.value });
     }
     function onModeToggle() {
       if (currentMode.value === 'signin') currentMode.value = 'signup';

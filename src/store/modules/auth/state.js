@@ -1,5 +1,9 @@
 const state = () => ({
-  userId: 'c3'
+  userId: null,
+  token: null,
+  expirationDate: null,
+  loading: false,
+  error: null
 });
 
 export default state;
