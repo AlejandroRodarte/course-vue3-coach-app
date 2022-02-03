@@ -21,7 +21,14 @@
             Refresh
           </base-button>
           <base-button
-            v-if="!isUserOnCoachList && !loading"
+            link
+            to="/auth"
+            v-if="!isAuthenticated"
+          >
+            Login
+          </base-button>
+          <base-button
+            v-if="isAuthenticated && !isUserOnCoachList && !loading"
             link
             to="/register"
           >
@@ -51,14 +58,17 @@
 import { ref, computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
+import * as authTypes from '../../store/modules/auth/types';
 import coachesListFilters from '../../util/constants/coaches/coaches-list-filters';
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
+import BaseButton from '../../components/ui/BaseButton.vue';
 
 export default {
   components: {
     CoachItem,
-    CoachFilter
+    CoachFilter,
+    BaseButton
   },
   setup() {
     const coachFilters = ref(coachesListFilters);
@@ -98,6 +108,11 @@ export default {
         return store.getters[coachesTypes.SHOULD_UPDATE];
       }
     );
+    const isAuthenticated = computed(
+      function() {
+        return store.getters[authTypes.IS_AUTHENTICATED];
+      }
+    );
     function onRefresh() {
       store.dispatch(coachesTypes.SET_COACHES);
     }
@@ -115,6 +130,7 @@ export default {
       isUserOnCoachList,
       loading,
       error,
+      isAuthenticated,
       onRefresh,
       onBaseDialogClose
     };

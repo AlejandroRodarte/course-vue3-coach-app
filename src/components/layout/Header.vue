@@ -12,15 +12,39 @@
             All coaches
           </router-link>
         </li>
-        <li>
+        <li v-if="isAuthenticated">
           <router-link to="/requests">
             Requests
+          </router-link>
+        </li>
+        <li v-else>
+          <router-link to="/auth">
+            Login
           </router-link>
         </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import * as authTypes from '../../store/modules/auth/types';
+
+export default {
+  setup() {
+    const store = useStore();
+    const isAuthenticated = computed(
+      function() {
+        return store.getters[authTypes.IS_AUTHENTICATED];
+      }
+    );
+
+    return { isAuthenticated };
+  }
+}
+</script>
 
 <style scoped>
 header {
