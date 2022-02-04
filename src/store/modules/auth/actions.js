@@ -15,6 +15,7 @@ const actions = {
       token: response.idToken,
       expirationDate: new Date().getTime() + (+response.expiresIn * 1000)
     };
+    localStorage.setItem('userData', JSON.stringify(mutateSetCredentialsPayload));
     ctx.commit(types.MUTATE_SET_CREDENTIALS, mutateSetCredentialsPayload);
   },
   [types.LOGIN]: async (ctx, payload) => {
@@ -24,7 +25,16 @@ const actions = {
     await ctx.dispatch(types.AUTHENTICATE, { method: 'signUp', credentials: payload });
   },
   [types.CLEAR_ERROR]: (ctx) => ctx.commit(types.MUTATE_CLEAR_ERROR),
-  [types.LOGOUT]: (ctx) => ctx.commit(types.MUTATE_CLEAR_CREDENTIALS)
+  [types.LOGOUT]: (ctx) => {
+    localStorage.removeItem('userData');
+    ctx.commit(types.MUTATE_CLEAR_CREDENTIALS);
+  },
+  [types.AUTO_LOGIN]: (ctx) => {
+    const stringifiedUserData = localStorage.getItem('userData');
+    if (!stringifiedUserData) return;
+    const userData = JSON.parse(stringifiedUserData);
+    ctx.commit(types.MUTATE_SET_CREDENTIALS, userData);
+  }
 };
 
 export default actions;

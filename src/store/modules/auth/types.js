@@ -15,3 +15,4 @@ export const SIGNUP = `${MODULE_NAME}/actions/signup`;
 export const LOGOUT = `${MODULE_NAME}/actions/logout`;
 export const AUTHENTICATE = `${MODULE_NAME}/actions/authenticate`;
 export const CLEAR_ERROR = `${MODULE_NAME}/actions/clearError`;
+export const AUTO_LOGIN = `${MODULE_NAME}/actions/autoLogin`;

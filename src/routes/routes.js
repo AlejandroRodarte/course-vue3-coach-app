@@ -24,7 +24,7 @@ const routes = [
   {
     path: '/register',
     component: CoachRegistration,
-    beforeEnter: guards.auth.user
+    beforeEnter: guards.auth.register
   },
   {
     path: '/requests',

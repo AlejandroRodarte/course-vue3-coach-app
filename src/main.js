@@ -8,6 +8,10 @@ import BaseDialog from './components/ui/BaseDialog.vue';
 
 import router from './routes/router';
 import store from './store';
+import * as authTypes from './store/modules/auth/types';
+
+const autoLogin = store.dispatch(authTypes.AUTO_LOGIN);
+router.beforeEach((to, from, next) => autoLogin.then(next));
 
 createApp(App)
   .use(router)
