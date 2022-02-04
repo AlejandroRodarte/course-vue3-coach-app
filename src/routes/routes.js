@@ -9,7 +9,7 @@ const UserAuth = () => import('../pages/auth/UserAuth.vue');
 
 const routes = [
   {
-    path: '/',
+    path: '',
     redirect: '/coaches'
   },
   {

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
 import * as authTypes from '../../store/modules/auth/types';
@@ -119,7 +119,9 @@ export default {
     function onBaseDialogClose() {
       store.dispatch(coachesTypes.CLEAR_ERROR);
     }
-    if (!hasCoaches.value || shouldUpdate.value) store.dispatch(coachesTypes.SET_COACHES);
+    onMounted(async () => {
+      if (!hasCoaches.value || shouldUpdate.value) await store.dispatch(coachesTypes.SET_COACHES);
+    });
     onUnmounted(() => {
       store.dispatch(coachesTypes.CLEAR_ERROR);
     });
