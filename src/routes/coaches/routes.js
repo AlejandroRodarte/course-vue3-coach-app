@@ -1,8 +1,7 @@
-import { defineAsyncComponent } from 'vue';
 import coachesIdRoutes from './id/routes';
 import CoachesList from '../../pages/coaches/CoachesList.vue';
 
-const CoachDetail = defineAsyncComponent(() => import('../../pages/coaches/CoachDetail.vue'));
+const CoachDetail = () => import('../../pages/coaches/CoachDetail.vue');
 
 const routes = [
   {

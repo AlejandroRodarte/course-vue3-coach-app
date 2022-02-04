@@ -1,12 +1,11 @@
-import { defineAsyncComponent } from 'vue';
 import coachesRoutes from './coaches/routes';
 import Coaches from '../pages/coaches/Coaches.vue';
 import NotFound from '../pages/NotFound.vue';
 import guards from '../guards';
 
-const CoachRegistration = defineAsyncComponent(() => import('../pages/coaches/CoachRegistration.vue'));
-const RequestsReceived = defineAsyncComponent(() => import('../pages/requests/RequestsReceived.vue'));
-const UserAuth = defineAsyncComponent(() => import('../pages/auth/UserAuth.vue'));
+const CoachRegistration = () => import('../pages/coaches/CoachRegistration.vue');
+const RequestsReceived = () => import('../pages/requests/RequestsReceived.vue');
+const UserAuth = () => import('../pages/auth/UserAuth.vue');
 
 const routes = [
   {

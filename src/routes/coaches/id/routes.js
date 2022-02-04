@@ -1,6 +1,4 @@
-import { defineAsyncComponent } from 'vue';
-
-const ContactCoach = defineAsyncComponent(() => import('../../../pages/requests/ContactCoach.vue'));
+const ContactCoach = () => import('../../../pages/requests/ContactCoach.vue');
 
 const routes = [
   {
