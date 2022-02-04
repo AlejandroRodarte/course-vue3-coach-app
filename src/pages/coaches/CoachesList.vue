@@ -76,6 +76,7 @@ export default {
     const filteredCoaches = computed(
       function() {
         return store.getters[coachesTypes.GET_COACHES].filter((coach) => {
+          console.log(coach);
           for (const area of coachFilters.value.areas) {
             if (coach.areas.includes(area)) return true;
           }
