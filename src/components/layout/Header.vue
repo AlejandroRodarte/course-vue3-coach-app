@@ -35,11 +35,13 @@
 <script>
 import { computed } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 import * as authTypes from '../../store/modules/auth/types';
 
 export default {
   setup() {
     const store = useStore();
+    const router = useRouter();
     const isAuthenticated = computed(
       function() {
         return store.getters[authTypes.IS_AUTHENTICATED];
@@ -47,6 +49,7 @@ export default {
     );
     function onLogout() {
       store.dispatch(authTypes.LOGOUT);
+      router.replace('/coaches');
     }
     return {
       isAuthenticated,

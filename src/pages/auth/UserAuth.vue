@@ -18,7 +18,7 @@
 <script>
 import { computed, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import * as authTypes from '../../store/modules/auth/types';
 import UserAuthForm from '../../components/auth/UserAuthForm.vue';
 
@@ -29,6 +29,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
     const loading = computed(
       function() {
         return store.getters[authTypes.GET_LOADING_FLAG];
@@ -45,7 +46,10 @@ export default {
         signup: authTypes.SIGNUP
       };
       await store.dispatch(mapModeToAction[payload.mode], payload.form);
-      if (!error.value) router.replace('/coaches');
+      if (error.value) return;
+      const redirect = route.query.redirect;
+      if (redirect) router.replace(`/${redirect}`);
+      else router.replace('/coaches');
     }
     function onBaseDialogClose() {
       store.dispatch(authTypes.CLEAR_ERROR);

@@ -4,6 +4,7 @@ import Coaches from '../pages/coaches/Coaches.vue';
 import CoachRegistration from '../pages/coaches/CoachRegistration.vue';
 import RequestsReceived from '../pages/requests/RequestsReceived.vue';
 import NotFound from '../pages/NotFound.vue';
+import guards from '../guards';
 
 const routes = [
   {
@@ -12,7 +13,8 @@ const routes = [
   },
   {
     path: '/auth',
-    component: UserAuth
+    component: UserAuth,
+    beforeEnter: guards.auth.anonymous
   },
   {
     path: '/coaches',
@@ -21,11 +23,13 @@ const routes = [
   },
   {
     path: '/register',
-    component: CoachRegistration
+    component: CoachRegistration,
+    beforeEnter: guards.auth.user
   },
   {
     path: '/requests',
-    component: RequestsReceived
+    component: RequestsReceived,
+    beforeEnter: guards.auth.user
   },
   {
     path: '/:notFound(.*)',
