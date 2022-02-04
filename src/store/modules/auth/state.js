@@ -3,7 +3,8 @@ const state = () => ({
   token: null,
   expirationDate: null,
   loading: false,
-  error: null
+  error: null,
+  timerId: null
 });
 
 export default state;

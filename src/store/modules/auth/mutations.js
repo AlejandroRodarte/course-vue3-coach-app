@@ -23,7 +23,9 @@ const mutations = {
     state.userId = null;
     state.token = null;
     state.expirationDate = null;
-  }
+    state.timerId = null;
+  },
+  [types.MUTATE_SET_TIMER_ID]: (state, payload) => state.timerId = payload.timerId
 };
 
 export default mutations;

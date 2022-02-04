@@ -48,7 +48,8 @@ export default {
       }
     );
     function onLogout() {
-      store.dispatch(authTypes.LOGOUT);
+      const payload = { redirect: false };
+      store.dispatch(authTypes.LOGOUT, payload);
       router.replace('/coaches');
     }
     return {
