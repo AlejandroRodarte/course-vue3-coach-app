@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import * as coachesTypes from '../../store/modules/coaches/types';
 
@@ -57,9 +57,19 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const coach = ref();
-    store.dispatch(coachesTypes.SELECT_COACH_ID, { selectedCoachId: props.id });
-    coach.value = store.getters[coachesTypes.GET_SELECTED_COACH];
+    const coach = ref({
+      firstName: '',
+      lastName: '',
+      description: '',
+      hourlyRate: 0,
+      areas: []
+    });
+    onMounted(async () => {
+      const hasCoaches = store.getters[coachesTypes.HAS_COACHES];
+      if (!hasCoaches) await store.dispatch(coachesTypes.SET_COACHES);
+      store.dispatch(coachesTypes.SELECT_COACH_ID, { selectedCoachId: props.id });
+      coach.value = store.getters[coachesTypes.GET_SELECTED_COACH];
+    });
     const fullName = computed(
       function() {
         return `${ coach.value.firstName } ${ coach.value.lastName }`
@@ -69,7 +79,7 @@ export default {
       function() {
         return `/coaches/${ props.id }/contact`;
       }
-    )
+    );
     return {
       coach,
       fullName,
